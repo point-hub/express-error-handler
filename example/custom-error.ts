@@ -1,26 +1,24 @@
+import { IError } from "@src/base-error.js";
 import { BaseError } from "@src/index.js";
 
-type LooseObject = {
-  [key: string]: unknown;
-};
-
 export default class CustomError extends BaseError {
-  constructor(message = "Custom Error") {
-    super(message);
-  }
+  constructor(sourceError: { exists: Array<string> }) {
+    const error: IError = {
+      code: 400,
+      status: "Bad Request",
+      message: "Malformed request syntax.",
+    };
 
-  get httpCode() {
-    return 422;
+    super(error);
+
+    if (sourceError.exists) {
+      this.errors = {
+        username: `is exists`,
+      };
+    }
   }
 
   get isOperational() {
     return true;
-  }
-
-  handle(error: LooseObject) {
-    this.info = {
-      ...error,
-    };
-    return this;
   }
 }

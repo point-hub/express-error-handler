@@ -1,11 +1,22 @@
-import BaseError from "./base-error.js";
+import BaseError, { IError } from "./base-error.js";
+import { find, TypeCodeStatus } from "./http-status.js";
 
-export default abstract class ApiError extends BaseError {
-  constructor(message: string) {
-    super(message);
+export default class ApiError extends BaseError {
+  constructor(codeStatus: TypeCodeStatus, errors?: object) {
+    const status = find(codeStatus);
+
+    if (!status) {
+      throw new Error(`Error codeStatus "${codeStatus}" not found`);
+    }
+
+    const error: IError = status;
+
+    if (errors) {
+      error.errors = errors;
+    }
+
+    super(error);
   }
-
-  abstract get httpCode(): number;
 
   get isOperational() {
     return true;

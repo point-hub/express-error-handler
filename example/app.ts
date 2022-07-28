@@ -1,6 +1,5 @@
 import express, { Express, NextFunction, Request, Response } from "express";
-import CustomApiError from "../example/custom-api-error.js";
-import CustomError from "../example/custom-error.js";
+import CustomError from "./custom-error.js";
 import { invalidPathMiddleware, errorHandlerMiddleware } from "@src/index.js";
 
 export function createApp() {
@@ -16,21 +15,13 @@ export function createApp() {
 
   app.get("/test-custom-error", (req: Request, res: Response, next: NextFunction) => {
     try {
-      // error from 3rd party library, ex: mongodb
+      // error from 3rd party library
       const customError = {
-        username: "username is not available",
+        exists: ["username"],
       };
 
-      const error = new CustomError().handle(customError);
+      const error = new CustomError(customError);
       throw error;
-    } catch (error) {
-      return next(error);
-    }
-  });
-
-  app.get("/test-custom-api-error", (req: Request, res: Response, next: NextFunction) => {
-    try {
-      throw new CustomApiError();
     } catch (error) {
       return next(error);
     }

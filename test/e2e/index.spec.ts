@@ -9,7 +9,10 @@ describe("Test Middleware", function () {
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toEqual(404);
     expect(response.body.code).toEqual(404);
-    expect(response.body.message).toEqual("Not Found");
+    expect(response.body.status).toEqual("Not Found");
+    expect(response.body.message).toEqual(
+      "The URL is not recognized or endpoint is valid but the resource itself does not exist."
+    );
   });
 
   it("Error", async function () {
@@ -17,25 +20,19 @@ describe("Test Middleware", function () {
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toEqual(500);
     expect(response.body.code).toEqual(500);
-    expect(response.body.message).toEqual("Internal Server Error");
+    expect(response.body.status).toEqual("Internal Server Error");
+    expect(response.body.message).toEqual("Sorry something went wrong.");
   });
 
   it("Custom Error", async function () {
     const response = await request(app).get("/test-custom-error").set("Accept", "application/json");
     expect(response.headers["content-type"]).toMatch(/json/);
-    expect(response.status).toEqual(422);
-    expect(response.body.code).toEqual(422);
-    expect(response.body.message).toEqual("Custom Error");
-    expect(response.body.info).toEqual({
-      username: "username is not available",
+    expect(response.status).toEqual(400);
+    expect(response.body.code).toEqual(400);
+    expect(response.body.status).toEqual("Bad Request");
+    expect(response.body.message).toEqual("Malformed request syntax.");
+    expect(response.body.errors).toEqual({
+      username: "is exists",
     });
-  });
-
-  it("Custom Api Error", async function () {
-    const response = await request(app).get("/test-custom-api-error").set("Accept", "application/json");
-    expect(response.headers["content-type"]).toMatch(/json/);
-    expect(response.status).toEqual(402);
-    expect(response.body.code).toEqual(402);
-    expect(response.body.message).toEqual("Payment Required");
   });
 });

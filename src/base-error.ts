@@ -1,12 +1,24 @@
-export default abstract class BaseError extends Error {
-  // You can attach relevant information to the error instance
-  public info?: object;
+export interface IError {
+  code: number;
+  status: string;
+  message: string;
+  errors?: object;
+}
 
-  constructor(message: string) {
-    super(message);
+export default abstract class BaseError extends Error implements IError {
+  public code: number;
+  public status: string;
+  public message: string;
+  public errors?: object | undefined;
+
+  constructor(error: IError) {
+    super(error.message);
+
+    this.code = error.code;
+    this.status = error.status;
+    this.message = error.message;
+    this.errors = error.errors;
   }
-
-  abstract get httpCode(): number;
 
   abstract get isOperational(): boolean;
 }

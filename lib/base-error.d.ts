@@ -1,7 +1,15 @@
-export default abstract class BaseError extends Error {
-    info?: object;
-    constructor(message: string);
-    abstract get httpCode(): number;
+export interface IError {
+    code: number;
+    status: string;
+    message: string;
+    errors?: object;
+}
+export default abstract class BaseError extends Error implements IError {
+    code: number;
+    status: string;
+    message: string;
+    errors?: object | undefined;
+    constructor(error: IError);
     abstract get isOperational(): boolean;
 }
 export declare const isTrustedError: (err: Error) => boolean;
