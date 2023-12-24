@@ -20,8 +20,7 @@ export function createApp() {
         exists: ["username"],
       };
 
-      const error = new CustomError(customError);
-      throw error;
+      throw new CustomError(customError);
     } catch (error) {
       return next(error);
     }

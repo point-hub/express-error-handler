@@ -1,5 +1,4 @@
 export interface IError extends Error {
-    name: string;
     code: number;
     status: string;
     message: string;
@@ -7,7 +6,6 @@ export interface IError extends Error {
     stack?: string;
 }
 export default abstract class BaseError extends Error implements IError {
-    name: string;
     code: number;
     status: string;
     message: string;
@@ -15,5 +13,6 @@ export default abstract class BaseError extends Error implements IError {
     stack?: string | undefined;
     constructor(error: IError);
     abstract get isOperational(): boolean;
+    abstract get name(): string;
 }
 export declare const isTrustedError: (err: Error) => boolean;

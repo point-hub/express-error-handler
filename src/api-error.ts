@@ -22,4 +22,8 @@ export default class ApiError extends BaseError {
   get isOperational() {
     return true;
   }
+
+  override get name(): string {
+    return "ApiError";
+  }
 }

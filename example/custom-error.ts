@@ -22,4 +22,8 @@ export default class CustomError extends BaseError {
   get isOperational() {
     return true;
   }
+
+  override get name() {
+    return "CustomError";
+  }
 }
