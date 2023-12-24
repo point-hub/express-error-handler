@@ -24,7 +24,7 @@ export default function errorHandler(err: Error, req: Request, res: Response, ne
     if (err.errors) {
       response.errors = err.errors;
     }
-    
+
     if (err.stack) {
       response.stack = err.stack;
     }
@@ -35,7 +35,7 @@ export default function errorHandler(err: Error, req: Request, res: Response, ne
 
   // Cannot handle error, return "INTERNAL SERVER ERROR"
   const response: ResponseType = {
-    name: 'ServerError',
+    name: "ServerError",
     code: 500,
     status: "Internal Server Error",
     message: "Sorry something went wrong.",

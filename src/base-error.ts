@@ -17,6 +17,9 @@ export default abstract class BaseError extends Error implements IError {
 
   constructor(error: IError) {
     super(error.message);
+    // Set the prototype explicitly.
+    // https://github.com/microsoft/TypeScript-wiki/blob/81fe7b91664de43c02ea209492ec1cea7f3661d0/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
+    Object.setPrototypeOf(this, BaseError.prototype);
 
     this.name = error.name;
     this.code = error.code;

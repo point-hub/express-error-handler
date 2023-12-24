@@ -16,6 +16,7 @@ export default class ApiError extends BaseError {
     }
 
     super(error);
+    Object.setPrototypeOf(this, ApiError.prototype);
   }
 
   get isOperational() {
