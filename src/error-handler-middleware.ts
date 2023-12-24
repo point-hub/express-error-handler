@@ -8,7 +8,6 @@ type ResponseType = {
   status: string;
   message: string;
   errors?: object;
-  stack?: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,10 +22,6 @@ export default function errorHandler(err: Error, req: Request, res: Response, ne
 
     if (err.errors) {
       response.errors = err.errors;
-    }
-
-    if (err.stack) {
-      response.stack = err.stack;
     }
 
     res.status(err.code).json(response);
