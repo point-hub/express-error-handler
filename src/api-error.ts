@@ -15,7 +15,7 @@ export default class ApiError extends BaseError {
       error.message = message;
     }
 
-    if (errors) {
+    if (error.code === 422 && errors) {
       error.errors = errors;
     }
 
