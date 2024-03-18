@@ -2,7 +2,7 @@ import BaseError, { IError } from "./base-error.js";
 import { find, TypeCodeStatus } from "./http-status.js";
 
 export default class ApiError extends BaseError {
-  constructor(codeStatus: TypeCodeStatus, errors?: object) {
+  constructor(codeStatus: TypeCodeStatus, message?: string, errors?: object) {
     const status = find(codeStatus);
 
     if (!status) {
@@ -10,6 +10,10 @@ export default class ApiError extends BaseError {
     }
 
     const error: IError = status;
+
+    if (message) {
+      error.message = message;
+    }
 
     if (errors) {
       error.errors = errors;
