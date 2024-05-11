@@ -19,7 +19,7 @@ describe("BaseError", function () {
         username: "is exists",
         password: "min 8 digits",
       };
-      const error = new ApiError(422, errors);
+      const error = new ApiError(422, { errors: errors });
       expect(error.errors).toEqual(errors);
     });
   });
